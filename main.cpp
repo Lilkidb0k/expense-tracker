@@ -12,5 +12,14 @@ const std::string BOLD = "\033[1m";
 const std::string RESET = "\033[0m";
 
 int main() {
-    std::cout << BOLD << "==== Expense Tracker ====\n" << RESET;
+    std::cout << BOLD << "\n\n==== Expense Tracker ====\n\n" << RESET;
+    std::cout << BOLD << "1. " << RESET << "Add Expense\n";
+    std::cout << BOLD << "2. " << RESET << "Remove Expense\n";
+    std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
+    std::cout << BOLD << "4. " << RESET << "Show Total Spent\n";
+    std::cout << BOLD << "5. " << RESET << "Show Spending by Category\n";
+    std::cout << BOLD << "6. " << RESET << "Exit\n";
+
+    std::cin.ignore();
+    std::cin.get();
 }
