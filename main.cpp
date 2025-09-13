@@ -15,7 +15,7 @@ int main() {
 
     int selection;
 
-    std::cout << BOLD << "\n\n==== Expense Tracker ====\n\n" << RESET;
+    std::cout << BOLD << "\n==== Expense Tracker ====\n\n" << RESET;
     std::cout << BOLD << "1. " << RESET << "Add Expense\n";
     std::cout << BOLD << "2. " << RESET << "Remove Expense\n";
     std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
