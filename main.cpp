@@ -12,24 +12,51 @@ const std::string BOLD = "\033[1m";
 const std::string RESET = "\033[0m";
 
 int main() {
-
     int selection;
 
-    std::cout << BOLD << "\n==== Expense Tracker ====\n\n" << RESET;
-    std::cout << BOLD << "1. " << RESET << "Add Expense\n";
-    std::cout << BOLD << "2. " << RESET << "Remove Expense\n";
-    std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
-    std::cout << BOLD << "4. " << RESET << "Show Total Spent\n";
-    std::cout << BOLD << "5. " << RESET << "Show Spending by Category\n";
-    std::cout << BOLD << "6. " << RESET << "Exit\n";
+    while (true) {
+        std::cout << BOLD << "\n==== Expense Tracker ====\n\n" << RESET;
+        std::cout << BOLD << "1. " << RESET << "Add Expense\n";
+        std::cout << BOLD << "2. " << RESET << "Remove Expense\n";
+        std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
+        std::cout << BOLD << "4. " << RESET << "Show Total Spent\n";
+        std::cout << BOLD << "5. " << RESET << "Show Spending by Category\n";
+        std::cout << BOLD << "6. " << RESET << "Exit\n";
 
-    std::cout << BOLD << "Please select an option: " << RESET;
-    std::cin >> selection;
+        std::cout << BOLD << "Please select an option: " << RESET;
+        std::cin >> selection;
 
-    if (selection != 6) {
+        switch (selection) {
+            case 1:
+                std::cout << GREEN << "\nYou selected: Add Expense" << RESET << "\n";
+                break;
+
+            case 2:
+                std::cout << GREEN << "\nYou selected: Remove Expense" << RESET << "\n";
+                break;
+
+            case 3:
+                std::cout << GREEN << "\nYou selected: View All Expenses" << RESET << "\n";
+                break;
+
+            case 4:
+                std::cout << GREEN << "\nYou selected: Show Total Spent" << RESET << "\n";
+                break;
+
+            case 5:
+                std::cout << GREEN << "\nYou selected: Show Spending by Category" << RESET << "\n";
+                break;
+
+            case 6:
+                std::cout << YELLOW << "\nExiting... Goodbye!" << RESET << "\n";
+                return 0;
+
+            default:
+                std::cout << RED << "\nInvalid selection. Try again." << RESET << "\n";
+                break;
+        }
+
         std::cin.ignore();
         std::cin.get();
     }
-
-    return 0;
 }
