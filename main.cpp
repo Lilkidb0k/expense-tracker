@@ -21,38 +21,38 @@ int main() {
         std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
         std::cout << BOLD << "4. " << RESET << "Show Total Spent\n";
         std::cout << BOLD << "5. " << RESET << "Show Spending by Category\n";
-        std::cout << BOLD << "6. " << RESET << "Exit\n";
+        std::cout << BOLD << "6. " << RESET << "Exit\n\n";
 
         std::cout << BOLD << "Please select an option: " << RESET;
         std::cin >> selection;
 
         switch (selection) {
             case 1:
-                std::cout << GREEN << "\nYou selected: Add Expense" << RESET << "\n";
+                std::cout << GREEN << "You selected: Add Expense" << RESET << "\n";
                 break;
 
             case 2:
-                std::cout << GREEN << "\nYou selected: Remove Expense" << RESET << "\n";
+                std::cout << GREEN << "You selected: Remove Expense" << RESET << "\n";
                 break;
 
             case 3:
-                std::cout << GREEN << "\nYou selected: View All Expenses" << RESET << "\n";
+                std::cout << GREEN << "You selected: View All Expenses" << RESET << "\n";
                 break;
 
             case 4:
-                std::cout << GREEN << "\nYou selected: Show Total Spent" << RESET << "\n";
+                std::cout << GREEN << "You selected: Show Total Spent" << RESET << "\n";
                 break;
 
             case 5:
-                std::cout << GREEN << "\nYou selected: Show Spending by Category" << RESET << "\n";
+                std::cout << GREEN << "You selected: Show Spending by Category" << RESET << "\n";
                 break;
 
             case 6:
-                std::cout << YELLOW << "\nExiting... Goodbye!" << RESET << "\n";
+                std::cout << YELLOW << "Exiting... Goodbye!" << RESET << "\n";
                 return 0;
 
             default:
-                std::cout << RED << "\nInvalid selection. Try again." << RESET << "\n";
+                std::cout << RED << "Invalid selection. Try again." << RESET << "\n";
                 break;
         }
 
