@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <fstream>
+#include <vector>
 
 const std::string RED = "\033[31m";
 const std::string GREEN = "\033[32m";
@@ -11,52 +13,58 @@ const std::string CYAN = "\033[36m";
 const std::string BOLD = "\033[1m";
 const std::string RESET = "\033[0m";
 
+struct Expense {
+    std::string category;
+    double amount;
+};
+
+void addExpense(std::vector<Expense>& expenses);
+void removeExpense(std::vector<Expense>& expenses);
+void viewExpenses(const std::vector<Expense>& expenses);
+void showTotal(const std::vector<Expense>& expenses);
+void showByCategory(const std::vector<Expense>& expenses);
+void saveToFile(const std::vector<Expense>& expenses, const std::string& filename) {
+    std::ofstream out(filename);
+    for (const auto& e : expenses) {
+        out << e.category << " " << e.amount << "\n";
+    }
+}
+void loadFromFile(std::vector<Expense>& expenses, const std::string& filename) {
+    std::ifstream in(filename);
+    Expense e;
+    while (in >> e.category >> e.amount) {
+        expenses.push_back(e);
+    }
+}
+
 int main() {
+    std::vector<Expense> expenses;
+    const std::string filename = "expenses.txt";
+
+    loadFromFile(expenses, filename);
+
     int selection;
-
-    while (true) {
-        std::cout << BOLD << "\n==== Expense Tracker ====\n\n" << RESET;
-        std::cout << BOLD << "1. " << RESET << "Add Expense\n";
-        std::cout << BOLD << "2. " << RESET << "Remove Expense\n";
-        std::cout << BOLD << "3. " << RESET << "View All Expenses\n";
-        std::cout << BOLD << "4. " << RESET << "Show Total Spent\n";
-        std::cout << BOLD << "5. " << RESET << "Show Spending by Category\n";
-        std::cout << BOLD << "6. " << RESET << "Exit\n\n";
-
-        std::cout << BOLD << "Please select an option: " << RESET;
+    do {
+        std::cout << "\n==== Expense Tracker ====\n";
+        std::cout << "1. Add Expense\n";
+        std::cout << "2. Remove Expense\n";
+        std::cout << "3. View All Expenses\n";
+        std::cout << "4. Show Total Spent\n";
+        std::cout << "5. Show Spending by Category\n";
+        std::cout << "6. Exit\n";
+        std::cout << "Please select an option: ";
         std::cin >> selection;
 
         switch (selection) {
-            case 1:
-                std::cout << GREEN << "You selected: Add Expense" << RESET << "\n";
-                break;
-
-            case 2:
-                std::cout << GREEN << "You selected: Remove Expense" << RESET << "\n";
-                break;
-
-            case 3:
-                std::cout << GREEN << "You selected: View All Expenses" << RESET << "\n";
-                break;
-
-            case 4:
-                std::cout << GREEN << "You selected: Show Total Spent" << RESET << "\n";
-                break;
-
-            case 5:
-                std::cout << GREEN << "You selected: Show Spending by Category" << RESET << "\n";
-                break;
-
-            case 6:
-                std::cout << YELLOW << "Exiting... Goodbye!" << RESET << "\n";
-                return 0;
-
-            default:
-                std::cout << RED << "Invalid selection. Try again." << RESET << "\n";
-                break;
+            case 1: addExpense(expenses); break;
+            case 2: removeExpense(expenses); break;
+            case 3: viewExpenses(expenses); break;
+            case 4: showTotal(expenses); break;
+            case 5: showByCategory(expenses); break;
+            case 6: saveToFile(expenses, filename); std::cout << "Goodbye!\n"; break;
+            default: std::cout << "Invalid choice.\n";
         }
+    } while (selection != 6);
 
-        std::cin.ignore();
-        std::cin.get();
-    }
+    return 0;
 }
