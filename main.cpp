@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <vector>
+#include <map>
+#include <limits>
 
 const std::string RED = "\033[31m";
 const std::string GREEN = "\033[32m";
@@ -18,11 +20,79 @@ struct Expense {
     double amount;
 };
 
-void addExpense(std::vector<Expense>& expenses);
-void removeExpense(std::vector<Expense>& expenses);
-void viewExpenses(const std::vector<Expense>& expenses);
-void showTotal(const std::vector<Expense>& expenses);
-void showByCategory(const std::vector<Expense>& expenses);
+void pause() {
+    std::cout << YELLOW << "\nPress ENTER to continue..." << RESET;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+    std::cin.get();
+}
+
+void addExpense(std::vector<Expense>& expenses) {
+    Expense e;
+    std::cout << "Enter category: ";
+    std::cin >> e.category; 
+    std::cout << "Enter amount: ";
+    std::cin >> e.amount;
+
+    expenses.push_back(e);
+    std::cout << GREEN << "Expense added successfully!\n" << RESET;
+}
+void removeExpense(std::vector<Expense>& expenses) {
+    if (expenses.empty()) {
+        std::cout << RED << "No expenses to remove.\n" << RESET;
+        return;
+    }
+
+    std::cout << "Expenses:\n";
+    for (size_t i = 0; i < expenses.size(); i++) {
+        std::cout << i+1 << ". " << expenses[i].category << " - $" << expenses[i].amount << "\n";
+    }
+
+    std::cout << "Enter the number of the expense to remove: ";
+    size_t index;
+    std::cin >> index;
+
+    if (index < 1 || index > expenses.size()) {
+        std::cout << RED << "Invalid index.\n" << RESET;
+        return;
+    }
+
+    expenses.erase(expenses.begin() + (index - 1));
+    std::cout << GREEN << "Expense removed successfully!\n" << RESET;
+}
+void viewExpenses(const std::vector<Expense>& expenses) {
+    if (expenses.empty()) {
+        std::cout << RED << "No expenses recorded.\n" << RESET;
+        return;
+    }
+
+    std::cout << BOLD << "All Expenses:\n" << RESET;
+    for (const auto& e : expenses) {
+        std::cout << "- " << CYAN << e.category << RESET << ": $" << e.amount << "\n";
+    }
+}
+void showTotal(const std::vector<Expense>& expenses) {
+    double total = 0;
+    for (const auto& e : expenses) {
+        total += e.amount;
+    }
+    std::cout << BOLD << "Total Spent: " << RESET << GREEN << "$" << total << "\n" << RESET;
+}
+void showByCategory(const std::vector<Expense>& expenses) {
+    if (expenses.empty()) {
+        std::cout << RED << "No expenses recorded.\n" << RESET;
+        return;
+    }
+
+    std::map<std::string, double> categoryTotals;
+    for (const auto& e : expenses) {
+        categoryTotals[e.category] += e.amount;
+    }
+
+    std::cout << BOLD << "Spending by Category:\n" << RESET;
+    for (const auto& pair : categoryTotals) {
+        std::cout << CYAN << pair.first << RESET << ": $" << pair.second << "\n";
+    }
+}
 void saveToFile(const std::vector<Expense>& expenses, const std::string& filename) {
     std::ofstream out(filename);
     for (const auto& e : expenses) {
@@ -58,11 +128,11 @@ int main() {
         switch (selection) {
             case 1: addExpense(expenses); break;
             case 2: removeExpense(expenses); break;
-            case 3: viewExpenses(expenses); break;
-            case 4: showTotal(expenses); break;
-            case 5: showByCategory(expenses); break;
+            case 3: viewExpenses(expenses); pause(); break;
+            case 4: showTotal(expenses); pause(); break;
+            case 5: showByCategory(expenses); pause(); break;
             case 6: saveToFile(expenses, filename); std::cout << "Goodbye!\n"; break;
-            default: std::cout << "Invalid choice.\n";
+            default: std::cout << "Invalid choice.\n"; pause(); break;
         }
     } while (selection != 6);
 
